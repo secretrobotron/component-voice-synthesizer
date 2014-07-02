@@ -1,3 +1,3 @@
-# ceci-voice-recognition
+# ceci-voice-synthesizer
 
-A voice recognition web component based on https://github.com/zenorocha/voice-elements.
+A speech synthesizer web component based on https://github.com/zenorocha/voice-elements.
