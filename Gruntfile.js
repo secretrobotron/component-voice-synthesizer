@@ -4,6 +4,7 @@ module.exports = function(grunt) {
         'connect': {
             demo: {
                 options: {
+                    port: 8001,
                     open: true,
                     keepalive: true,
                     middleware: function (connect, options, middlewares) {

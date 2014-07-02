@@ -1,19 +1,33 @@
-<link rel="import" href="./voice-recognition.html">
-<polymer-element name="ceci-voice-recognition" attributes="state" extends="ceci-element">
+<link rel="import" href="./voice-player.html">
+<polymer-element name="ceci-voice-synthesizer" attributes="text disabled" extends="ceci-element">
   <ceci-definition>
     {
-      "tags": ["text", "voice"],
+      "tags": ["text", "voice", "speech"],
       "thumbnail": "./thumbnail.png",
-      "description": "Encodes voice as text!",
-      "name": "Voice Recognition",
+      "description": "Speaks text you write!",
+      "name": "Voice Synthesizer",
       "listeners": {
-        "start": {
-          "label": "Start Recording",
-          "description": "Start recording voice data."
+        "speak": {
+          "label": "Speak",
+          "description": "Says the input text in a computer voice."
         },
         "stop": {
-          "label": "Stop Recording",
-          "description": "Stop recording and try to decode."
+          "label": "Stop",
+          "description": "Stops the robot while talking."
+        }
+      },
+      "attributes": {
+        "text": {
+          "label": "Text",
+          "description": "Text to speak.",
+          "listener": true,
+          "editable": "text"
+        },
+        "disabled": {
+          "label": "Disabled",
+          "description": "Disables user input.",
+          "listener": true,
+          "editable": "boolean"
         }
       }
     }
@@ -23,77 +37,38 @@
       :host {
         display: block;
         width: 100%;
-        min-height: 2em;
-      }
-      :host #state-message {
-        color: white;
-        visibility: hidden;
-        text-align: center;
-        font-size: 1.5em;
-      }
-
-      :host #result-text {
-        padding: .2em;
-      }
-
-      :host([state="recording"],[state="decoding"]) #state-message {
-        visibility: visible;
-      }
-
-      :host([state="recording"]) #state-message {
-        background-color: darkred;
-      }
-
-      :host([state="decoding"]) #state-message {
-        background-color: gold;
-      }
-
-      :host(:not([state="idle"])) #result-text {
-        visibility: hidden;
       }
 
       :host #container {
-        position: relative;
+        width: 100%;
+        padding: .2em;
       }
 
-      :host #container div {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
+      :host #inputText {
+        width: 95%;
       }
     </style>
-    <voice-recognition id="vr"></voice-recognition>
+    <voice-player id="vp"></voice-player>
     <div id="container">
-      <div id="state-message">{{state}}</div>
-      <div id="result-text">{{resultantText}}</div>
+      <input id="inputText" type="text" disabled?="{{disabled}}" placeholder="Type something to say..." value="{{text}}">
     </div>
     <shadow></shadow>
     <content></content>
   </template>
   <script>
-    Polymer('ceci-voice-recognition', {
-      resultantText: '',
-      state: 'idle',
+    Polymer('ceci-voice-synthesizer', {
+      disabled: false,
       ready: function () {
         this.super();
-        this.$.vr.addEventListener('result', function (e) {
-          this.resultantText = e.detail.result;
-          this.state = 'idle';
+      },
+      speak: function () {
+        this.$.vp.text = this.text;
+        this.$.vp.async(function () {
+          this.$.vp.speak();
         }.bind(this));
       },
-      start: function () {
-        this.$.vr.start();
-        this.state = 'recording';
-      },
       stop: function () {
-        this.$.vr.stop();
-        this.state = 'decoding';
-      },
-      abort: function () {
-        this.$.vr.abort();
-        this.state = 'idle';
+        this.$.vp.cancel();
       }
     });
   </script>
