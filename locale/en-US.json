@@ -1,0 +1,12 @@
+{
+  "ceci-voice-synthesizer/description": "Speaks text you write!",
+  "ceci-voice-synthesizer/name": "Voice Synthesizer",
+  "ceci-voice-synthesizer/speak/label": "Speak",
+  "ceci-voice-synthesizer/speak/description": "Says the input text in a computer voice.",
+  "ceci-voice-synthesizer/stop/label": "Stop",
+  "ceci-voice-synthesizer/stop/description": "Stops the robot while talking.",
+  "ceci-voice-synthesizer/text/label": "Text",
+  "ceci-voice-synthesizer/text/description": "Text to speak.",
+  "ceci-voice-synthesizer/disabled/label": "Disabled",
+  "ceci-voice-synthesizer/disabled/description": "Disables user input."
+}
